@@ -1,0 +1,40 @@
+import cv2
+import time
+
+# Open video file
+cap = cv2.VideoCapture("C:/Users/rupas/Videos/Captures/WATCH.mp4WATCH.mp4")
+
+# Check if video opened successfully
+if not cap.isOpened():
+    print("Error: Cannot open video")
+else:
+    frames = []
+
+    # Read all frames
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        frames.append(frame)
+
+    # Release video
+    cap.release()
+
+    print("Playing reverse video in slow motion")
+
+    # Play frames in reverse order
+    for frame in reversed(frames):
+
+        cv2.imshow("Reverse Slow Motion Video", frame)
+
+        # Slow motion delay
+        time.sleep(0.1)
+
+        # Press q to quit
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+# Close all windows
+cv2.destroyAllWindows()
