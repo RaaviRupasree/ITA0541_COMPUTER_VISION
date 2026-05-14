@@ -1,0 +1,36 @@
+import cv2
+
+# Open webcam or video file
+cap = cv2.VideoCapture(0)   # Use 0 for webcam
+# cap = cv2.VideoCapture("video.mp4")  # Use this for video file
+
+# Check if video opened successfully
+if not cap.isOpened():
+    print("Error: Cannot open video")
+else:
+    print("Press 'q' to exit")
+
+    while True:
+        # Read frame
+        ret, frame = cap.read()
+
+        if not ret:
+            print("Failed to capture frame")
+            break
+
+        # Display video
+        cv2.imshow("Video Processing", frame)
+
+        # Slow motion → increase delay value
+        # Fast motion → decrease delay value
+
+        key = cv2.waitKey(100) & 0xFF   # Slow motion
+        # key = cv2.waitKey(10) & 0xFF  # Fast motion
+
+        # Press q to quit
+        if key == ord('q'):
+            break
+
+# Release video and close windows
+cap.release()
+cv2.destroyAllWindows()
