@@ -1,0 +1,43 @@
+import cv2
+import pytesseract
+
+# Open video file
+cap = cv2.VideoCapture("input_video.mp4")
+
+# Check if video opened successfully
+if not cap.isOpened():
+    print("Error: Cannot open video")
+else:
+    frame_count = 0
+
+    while True:
+        # Read frame
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        frame_count += 1
+
+        # Process every 30th frame
+        if frame_count % 30 == 0:
+
+            # Convert frame to grayscale
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # Extract text using OCR
+            text = pytesseract.image_to_string(gray)
+
+            print(f"\nText from Frame {frame_count}:")
+            print(text)
+
+            # Display frame
+            cv2.imshow("Video Frame", frame)
+
+        # Press q to quit
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+# Release video and close windows
+cap.release()
+cv2.destroyAllWindows()
